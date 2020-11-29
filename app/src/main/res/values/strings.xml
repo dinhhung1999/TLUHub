@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">TLU_HUB</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    ///login//
+    <string name="start">Bắt Đầu</string>
+    <string name="welcome">Chào mừng</string>
+    <string name="studentHud">Student Hub</string>
+    <string name="login">Tiếp Tục</string>
+    <string name="password">Mật Khẩu</string>
+    <string name="msv">Mã Sinh Viên</string>
+    <string name="forgotPassword">Quên Mật Khẩu ?</string>
+
+
+    /// main ///
+    <string name="home">Trang Chủ</string>
+    <string name="discover">Khám Phá</string>
+    <string name="user">Tài Khoản</string>
+
+    /// drawer menu
+    <string name="personalInformation">Thông tin cá nhân</string>
+    <string name="time">Thời gian</string>
+    <string name="setting">Cài đặt</string>
+    <string name="QRcode">QR Code</string>
+    <string name="trend">Xu hướng</string>
+    <string name="studentZone">StudentZone</string>
+    <string name="logout">Đăng xuất</string>
+
+</resources>
