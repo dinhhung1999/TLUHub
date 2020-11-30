@@ -11,6 +11,7 @@
     <color name="darkDesaturatedBlue">#314755</color>
     <color name="bgLogin">#34669F</color>
     <color name="grey">#C4BEC8</color>
+    <color name="darkGrey">#323234</color>
     <color name="blue">#3D67F6</color>
     <color name="brown">#553120</color>
 </resources>

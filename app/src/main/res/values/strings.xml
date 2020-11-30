@@ -26,4 +26,15 @@
     <string name="studentZone">StudentZone</string>
     <string name="logout">Đăng xuất</string>
 
+
+    /// tabhome///
+    <string name="search">Tìm kiếm</string>
+    <string name="popularToYou">Phổ biến dành cho bạn</string>
+    <string name="qualityAssurance">Đảm bảo chất lượng</string>
+    <string name="magazine">Tạp chí</string>
+    <string name="library">Thư viện</string>
+    <string name="hightlightActivity">Hoạt động nổi bật</string>
+
+
+
 </resources>
