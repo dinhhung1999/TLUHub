@@ -27,7 +27,7 @@
     <string name="logout">Đăng xuất</string>
 
 
-    /// tabhome///
+    /// tabdiscover///
     <string name="search">Tìm kiếm</string>
     <string name="popularToYou">Phổ biến dành cho bạn</string>
     <string name="qualityAssurance">Đảm bảo chất lượng</string>
@@ -35,6 +35,8 @@
     <string name="library">Thư viện</string>
     <string name="hightlightActivity">Hoạt động nổi bật</string>
 
+    //// qrcode ///
+    <string name="stop">Dừng</string>
 
 
 </resources>

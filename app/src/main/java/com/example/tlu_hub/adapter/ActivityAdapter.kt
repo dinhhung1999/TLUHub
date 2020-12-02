@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tlu_hub.R
-import com.example.tlu_hub.model.popular.PopularModel
+import com.example.tlu_hub.model.PopularModel
 
 
 class ActivityAdapter : RecyclerView.Adapter<ActivityHolder> {

@@ -1,17 +1,16 @@
 package com.example.tlu_hub.ui.login.loginFragment
 
-import android.content.Intent
+import android.Manifest
 import android.os.Bundle
 import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.HandlerCompat.postDelayed
-import androidx.databinding.DataBindingUtil
-import com.example.tlu_hub.MainActivity
+import com.example.tlu_hub.navigation.MyNavigation
 import com.example.tlu_hub.R
 import kotlinx.android.synthetic.main.fragment_login.*
+import pub.devrel.easypermissions.EasyPermissions
 
 /**
  * //                       _ooOoo_
@@ -36,13 +35,14 @@ import kotlinx.android.synthetic.main.fragment_login.*
  * //    .............................................
  * //                    Pray for no Bugs
  * =====================================================
- * Name：DVHHung
- * Create on：24-11-2020
+ * Name：DVHung
+ * Create on：25-11-2020
  * =====================================================
  */
 
 @Suppress("DEPRECATION")
 class LoginFragment : Fragment(),LoginView {
+    val LOGINACTIVITY = 1999
     private val presenter = LoginPresenter(this, LoginInteractor())
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,18 +58,16 @@ class LoginFragment : Fragment(),LoginView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btnLogin.setOnClickListener {
-            showProgress()
-            postDelayed(2000) {
-                hideProgress()
-                navigateToHome()
-            }
+            validateCredentials()
+
         }
     }
 
 
-//    private fun validateCredentials(userName : String, password : String) {
-////        presenter.validateCredentials(userName,password);
-//    }
+    private fun validateCredentials() {
+        presenter.validateCredentials(etUser.text.toString(), etPassword.text.toString())
+
+    }
 
     override fun onDestroy() {
         presenter.onDestroy()
@@ -93,11 +91,47 @@ class LoginFragment : Fragment(),LoginView {
     }
 
     override fun navigateToHome() {
-        startActivity(Intent(context, MainActivity::class.java))
+        context?.let { MyNavigation.getInstance().goToMain(it) }
 
     }
     private fun postDelayed(delayMillis: Long, task: () -> Unit) {
         Handler().postDelayed(task, delayMillis)
     }
 
+    fun checkRequiredPermissions(): Boolean {
+        val perms = arrayOf(
+//            Manifest.permission.CHANGE_CONFIGURATION,
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_WIFI_STATE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.CHANGE_NETWORK_STATE,
+            Manifest.permission.ACCESS_NETWORK_STATE,
+//            Manifest.permission.LOCATION_HARDWARE,
+//            Manifest.permission.ACCESS_COARSE_LOCATION,
+//            Manifest.permission.ACCESS_FINE_LOCATION,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+        if (!context?.let { EasyPermissions.hasPermissions(it, *perms) }!!) {
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(
+                this,
+                "",
+                LOGINACTIVITY,
+                *perms
+            )
+            return false
+        }
+        return true
+    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
 }
+

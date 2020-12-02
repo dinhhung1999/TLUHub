@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">com.example.tlu_hub</domain>
-    </domain-config>
+<!--    <domain-config cleartextTrafficPermitted="true">-->
+<!--        <domain includeSubdomains="true">http://35.240.216.132:5555</domain>-->
+<!--    </domain-config>-->
+        <base-config cleartextTrafficPermitted="true" />
 </network-security-config>

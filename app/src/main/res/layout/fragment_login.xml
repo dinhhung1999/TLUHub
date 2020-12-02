@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/tvTitleLogin"
-        android:text="Đăng nhập"
+        android:text=""
         style="@style/textSyleWhiteH2"
         android:textColor="@color/white"
         android:layout_marginTop="@dimen/_120sdp"

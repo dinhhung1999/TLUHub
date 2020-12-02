@@ -4,8 +4,7 @@ class LoginPresenter(var loginView: LoginView?, val loginInteractor: LoginIntera
         LoginInteractor.OnLoginFinishedListener {
 
     fun validateCredentials(username: String, password: String) {
-        loginView?.showProgress()
-        loginInteractor.login(username, password, this)
+        loginInteractor.login(username, password,this)
     }
 
     fun onDestroy() {
@@ -27,6 +26,7 @@ class LoginPresenter(var loginView: LoginView?, val loginInteractor: LoginIntera
     }
 
     override fun onSuccess() {
+        loginView?.hideProgress()
         loginView?.navigateToHome()
     }
 }

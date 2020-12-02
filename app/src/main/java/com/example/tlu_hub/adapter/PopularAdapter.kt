@@ -5,11 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tlu_hub.R
-import com.example.tlu_hub.model.popular.PopularModel
+import com.example.tlu_hub.model.PopularModel
 
 class PopularAdapter : RecyclerView.Adapter<PopularHolder> {
     private lateinit var populars: ArrayList<PopularModel>

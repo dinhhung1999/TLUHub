@@ -68,4 +68,11 @@
     <style name="Theme.TLU_HUB.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.TLU_HUB.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
+    <style name="OnClick">
+        <item name="android:clickable">true</item>
+        <item name="android:onClick">onClick</item>
+    </style>
 </resources>

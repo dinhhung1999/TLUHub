@@ -1,4 +1,4 @@
-package com.example.tlu_hub.model.popular
+package com.example.tlu_hub.model
 
 class PopularModel ( private var id : Int, private var title : String, private var urlImage : String) {
     public var Id : Int

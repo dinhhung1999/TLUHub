@@ -1,23 +1,50 @@
 package com.example.tlu_hub
 
+import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import android.view.Window
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.example.tlu_hub.ui.discover.DiscoverFragment
 import com.example.tlu_hub.ui.home.HomeFragment
+import com.example.tlu_hub.ui.navigationDrawer.qrCode.QRCodeActivity
+import com.example.tlu_hub.ui.user.UserFragment
 import com.tenclouds.fluidbottomnavigation.FluidBottomNavigationItem
+import com.tenclouds.fluidbottomnavigation.listener.OnTabSelectedListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import pub.devrel.easypermissions.EasyPermissions
+import java.util.*
+import java.util.concurrent.Delayed
 
 
 class MainActivity : AppCompatActivity() {
     var navigationPosition: Int = 0
+
+    private val MAINACTIVITY = 0
+    val KEY_IS_QR_CODE = "key_code"
+    val  KEY_IS_CONTINUOUS : String = "key_continuous_scan"
+    val REQUEST_CODE_SCAN = 0X01
+    val REQUEST_CODE_PHOTO = 0X02
+
+    val RC_CAMERA = 0X01
+
+    val RC_READ_PHOTO = 0X02
+
+    private val cls: Class<*>? = null
+    private val title: String? = null
+    private val isContinuousScan = false
+
 
     private lateinit var toggle: ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_main)
         initView()
-        getFragment(HomeFragment.newInstance())
+        getFragment(DiscoverFragment.newInstance())
 
     }
 
@@ -68,15 +95,34 @@ class MainActivity : AppCompatActivity() {
             )
         fluidBottomNavigation.selectTab(1)
 
-        fluidBottomNavigation.onTabSelectedListener onTabSelected()
+
+        fluidBottomNavigation.onTabSelectedListener = object : OnTabSelectedListener {
+            override fun onTabSelected(position: Int) {
+                when (fluidBottomNavigation.items[position]) {
+                    fluidBottomNavigation.items[0] -> {
+                        nav_view.setCheckedItem(R.id.nav_item_home)
+                        getFragment(HomeFragment.newInstance())
+
+                    }
+                    fluidBottomNavigation.items[1] -> {
+                        getFragment(DiscoverFragment.newInstance())
+                    }
+                    fluidBottomNavigation.items[2] -> {
+                        nav_view.setCheckedItem(R.id.nav_item_info)
+                        getFragment(UserFragment.newInstance())
+                    }
+                }
+            }
+        }
 
     }
 
 
     override fun onBackPressed() {
-
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
+        } else{
+            super.onBackPressed()
         }
 
     }
@@ -93,7 +139,19 @@ class MainActivity : AppCompatActivity() {
         nav_view.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_item_home -> {
-                    Toast.makeText(this, "The Mistbelt Forests", Toast.LENGTH_SHORT).show();
+                    fluidBottomNavigation.selectTab(0)
+                    getFragment(HomeFragment.newInstance())
+                }
+                R.id.nav_item_info -> {
+                    fluidBottomNavigation.selectTab(2)
+                    getFragment(UserFragment.newInstance())
+                }
+                R.id.nav_item_qrCode -> {
+                    GlobalScope.launch { // launch a new coroutine in background and continue
+                        delay(210L) //
+                        checkCameraPermissions()
+                    }
+//                    startActivity(Intent(this, QRCodeActivity::class.java))
                 }
 
             }
@@ -113,20 +171,14 @@ class MainActivity : AppCompatActivity() {
         try {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                .addToBackStack(null)
                 .commit()
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-
-    private fun navigateToFragment(fragmentToNavigate: Fragment) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.container, fragmentToNavigate)
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
-    }
 
     //    override fun onConfigurationChanged(newConfig: Configuration) {
 //        super.onConfigurationChanged(newConfig)
@@ -140,7 +192,40 @@ class MainActivity : AppCompatActivity() {
 //        }
 //        return super.onOptionsItemSelected(item)
 //    }
+private  fun startScan(cls: Class<*>, title: String) {
+    val optionsCompat = ActivityOptionsCompat.makeCustomAnimation(this, R.anim.`in`, R.anim.out)
+    val intent = Intent(this, cls)
+//    intent.putExtra(MainActivity.KEY_IS_CONTINUOUS, isContinuousScan)
+    ActivityCompat.startActivityForResult(
+        this,
+        intent,
+        REQUEST_CODE_SCAN,
+        optionsCompat.toBundle()
+    )
+}
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+
+private  fun checkCameraPermissions() {
+    val perms = arrayOf(Manifest.permission.CAMERA)
+    if (EasyPermissions.hasPermissions(this, *perms)) { //有权限
+        startScan(QRCodeActivity::class.java, "scan")
+    } else {
+        // Do not have permissions, request them now
+        EasyPermissions.requestPermissions(
+            this, "afasfasfas",
+            RC_CAMERA, *perms
+        )
+    }
+}
 
 
 }
