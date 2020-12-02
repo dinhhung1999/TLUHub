@@ -42,7 +42,6 @@ import pub.devrel.easypermissions.EasyPermissions
 
 @Suppress("DEPRECATION")
 class LoginFragment : Fragment(),LoginView {
-    val LOGINACTIVITY = 1999
     private val presenter = LoginPresenter(this, LoginInteractor())
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,55 +82,16 @@ class LoginFragment : Fragment(),LoginView {
     }
 
     override fun setUsernameError() {
-        TODO("Not yet implemented")
+        etPassword.error = "Mật khẩu không chính xác"
     }
 
     override fun setPasswordError() {
-        TODO("Not yet implemented")
+        etPassword.error = "Mật khẩu không chính xác"
     }
 
     override fun navigateToHome() {
         context?.let { MyNavigation.getInstance().goToMain(it) }
 
     }
-    private fun postDelayed(delayMillis: Long, task: () -> Unit) {
-        Handler().postDelayed(task, delayMillis)
-    }
-
-    fun checkRequiredPermissions(): Boolean {
-        val perms = arrayOf(
-//            Manifest.permission.CHANGE_CONFIGURATION,
-            Manifest.permission.INTERNET,
-            Manifest.permission.ACCESS_WIFI_STATE,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.CHANGE_NETWORK_STATE,
-            Manifest.permission.ACCESS_NETWORK_STATE,
-//            Manifest.permission.LOCATION_HARDWARE,
-//            Manifest.permission.ACCESS_COARSE_LOCATION,
-//            Manifest.permission.ACCESS_FINE_LOCATION,
-//            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
-        if (!context?.let { EasyPermissions.hasPermissions(it, *perms) }!!) {
-            // Do not have permissions, request them now
-            EasyPermissions.requestPermissions(
-                this,
-                "",
-                LOGINACTIVITY,
-                *perms
-            )
-            return false
-        }
-        return true
-    }
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
 }
 

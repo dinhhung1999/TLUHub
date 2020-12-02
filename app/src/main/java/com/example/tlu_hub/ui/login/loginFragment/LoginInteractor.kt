@@ -1,5 +1,13 @@
 package com.example.tlu_hub.ui.login.loginFragment
 
+import android.util.Log
+import com.example.tlu_hub.contraints.Constraint
+import com.example.tlu_hub.data_local.Preferences
+import com.example.tlu_hub.http.API
+import com.example.tlu_hub.model.userData.UserData
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
 class LoginInteractor {
@@ -20,37 +28,30 @@ class LoginInteractor {
             "identifier" to username,
             "password" to password
         )
-//        val call: Call<UserData> = API.apiService.login(body)
-//        call.enqueue(object : Callback<UserData> {
-//            override fun onResponse(call: Call<UserData>, response: Response<UserData>) {
-//                if (response.isSuccessful) {
-//                    Preferences.getInstance().saveToken(response.body()!!.token)
-//                    Constraint.username = response.body()?.user!!.username
-//                    listener.onSuccess()
-//                } else {
-//                    when (response.code()) {
-//                        400 -> Log.e("Error 400", "Bad Request")
-//                        404 -> Log.e("Error 404", "Not Found")
-//                        else -> Log.e("Error", "Generic Error")
-//                    }
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<UserData>, t: Throwable) {
-//                Log.e("ERROR: ", t.message!!)
-//            }
-//
-//            /**
-//             * Invoked for a received HTTP response.
-//             *
-//             *
-//             * Note: An HTTP response may still indicate an application-level failure such as a 404 or 500.
-//             * Call [Response.isSuccessful] to determine if the response indicates success.
-//             */
-//
-//        })
-//
-//
-//    }
+        val call: Call<UserData> = API.apiService.login(body)
+        call.enqueue(object : Callback<UserData> {
+            override fun onResponse(call: Call<UserData>, response: Response<UserData>) {
+                if (response.isSuccessful) {
+                    Preferences.getInstance().saveToken(response.body()!!.token)
+                    Constraint.username = response.body()?.user!!.username
+                    listener.onSuccess()
+                } else {
+                    listener.onPasswordError()
+                    when (response.code()) {
+                        400 -> Log.e("Error 400", "Bad Request")
+                        404 -> Log.e("Error 404", "Not Found")
+                        else -> Log.e("Error", "Generic Error")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<UserData>, t: Throwable) {
+                listener.onPasswordError()
+                Log.e("ERROR: ", t.message!!)
+            }
+
+        })
+
+
     }
 }
