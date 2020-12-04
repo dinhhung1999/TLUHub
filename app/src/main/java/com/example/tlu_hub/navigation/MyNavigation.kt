@@ -17,7 +17,6 @@ class MyNavigation {
         fun getInstance(): MyNavigation {
             if (instance == null) {
                 instance = MyNavigation()
-//                throw IllegalAccessException("Preferences must be initialized in Application class first.")
             }
             return instance as MyNavigation
         }
@@ -30,12 +29,6 @@ class MyNavigation {
             instance = MyNavigation()
         }
     }
-
-//    fun goToLogin(contextFrom: Context) {
-//        val intent = Intent(contextFrom, vn.dms.sharkforsale.general.login.LoginActivity::class.java)
-//        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//        contextFrom.startActivity(intent)
-//    }
 
     fun goToMain(contextFrom: Context) {
         val intent = Intent(contextFrom, MainActivity::class.java)

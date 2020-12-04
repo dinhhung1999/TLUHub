@@ -11,7 +11,7 @@ import com.example.tlu_hub.R
 import com.example.tlu_hub.model.PopularModel
 
 class PopularAdapter : RecyclerView.Adapter<PopularHolder> {
-    private lateinit var populars: ArrayList<PopularModel>
+    private  var populars: ArrayList<PopularModel>
 
     constructor(populars: ArrayList<PopularModel>) : super() {
         this.populars = populars

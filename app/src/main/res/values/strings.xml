@@ -38,5 +38,10 @@
     //// qrcode ///
     <string name="stop">Dừng</string>
 
+    /// information
+    <string name="email">Email</string>
+    <string name="code_user">Mã sinh viên</string>
+    <string name="useName">Tên đăng nhập</string>
+
 
 </resources>

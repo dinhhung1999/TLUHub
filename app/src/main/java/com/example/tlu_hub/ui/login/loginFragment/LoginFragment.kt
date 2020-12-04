@@ -40,7 +40,6 @@ import pub.devrel.easypermissions.EasyPermissions
  * =====================================================
  */
 
-@Suppress("DEPRECATION")
 class LoginFragment : Fragment(),LoginView {
     private val presenter = LoginPresenter(this, LoginInteractor())
     override fun onCreateView(
@@ -56,9 +55,10 @@ class LoginFragment : Fragment(),LoginView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        etUser.setText("hungdv@wru.vn")
+        etPassword.setText("123456")
         btnLogin.setOnClickListener {
             validateCredentials()
-
         }
     }
 

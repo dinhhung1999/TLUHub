@@ -7,12 +7,13 @@ class Constraint {
         companion object {
             const val SUCCESS = "success"
             const val ERROR = "error"
-
+            var isLogin : Boolean = false
         }
     }
     companion object {
         var account: UserData? = null
         lateinit var username: String
+        lateinit var userData : UserData
     }
 
 }

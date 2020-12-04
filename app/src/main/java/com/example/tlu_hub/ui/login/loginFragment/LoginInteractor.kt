@@ -2,6 +2,7 @@ package com.example.tlu_hub.ui.login.loginFragment
 
 import android.util.Log
 import com.example.tlu_hub.contraints.Constraint
+import com.example.tlu_hub.contraints.Constraint.API_STATUS.Companion.isLogin
 import com.example.tlu_hub.data_local.Preferences
 import com.example.tlu_hub.http.API
 import com.example.tlu_hub.model.userData.UserData
@@ -11,8 +12,10 @@ import retrofit2.Response
 import java.util.*
 
 class LoginInteractor {
-    private lateinit var body: HashMap<String, String>
+    companion object{
 
+    }
+    private lateinit var body: HashMap<String, String>
     interface OnLoginFinishedListener {
         fun onUsernameError()
         fun onPasswordError()
@@ -34,6 +37,8 @@ class LoginInteractor {
                 if (response.isSuccessful) {
                     Preferences.getInstance().saveToken(response.body()!!.token)
                     Constraint.username = response.body()?.user!!.username
+                    Constraint.userData = response.body()!!
+                    isLogin = true
                     listener.onSuccess()
                 } else {
                     listener.onPasswordError()

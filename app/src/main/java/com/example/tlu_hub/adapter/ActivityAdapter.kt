@@ -12,7 +12,7 @@ import com.example.tlu_hub.model.PopularModel
 
 
 class ActivityAdapter : RecyclerView.Adapter<ActivityHolder> {
-    private lateinit var populars: ArrayList<PopularModel>
+    private  var populars: ArrayList<PopularModel>
 
     constructor(populars: ArrayList<PopularModel>) : super() {
         this.populars = populars
@@ -23,7 +23,6 @@ class ActivityAdapter : RecyclerView.Adapter<ActivityHolder> {
     }
 
     override fun onBindViewHolder(holder: ActivityHolder, position: Int) {
-        if (holder != null) {
             holder.tvActivity.text = populars[position].Title
             Glide
                 .with(holder.itemView)
@@ -32,8 +31,6 @@ class ActivityAdapter : RecyclerView.Adapter<ActivityHolder> {
                 .placeholder(R.drawable.loading)
                 .error(R.drawable.ic_round_error_outline_24)
                 .into(holder.imActivity)
-
-        }
     }
 
     override fun getItemCount(): Int {

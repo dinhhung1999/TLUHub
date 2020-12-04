@@ -2,7 +2,9 @@ package com.example.tlu_hub
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.View
 import android.view.Window
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -12,10 +14,14 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
 import com.example.tlu_hub.ui.discover.DiscoverFragment
 import com.example.tlu_hub.ui.home.HomeFragment
 import com.example.tlu_hub.ui.navigationDrawer.qrCode.QRCodeActivity
+import com.example.tlu_hub.ui.navigationDrawer.qrCode.QrCodeFragment
 import com.example.tlu_hub.ui.user.UserFragment
+import com.king.zxing.Intents
 import com.tenclouds.fluidbottomnavigation.FluidBottomNavigationItem
 import com.tenclouds.fluidbottomnavigation.listener.OnTabSelectedListener
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,24 +29,25 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
-import java.util.*
-import java.util.concurrent.Delayed
 
 
 class MainActivity : AppCompatActivity() {
-    var navigationPosition: Int = 0
 
-    private val MAINACTIVITY = 0
-    val KEY_IS_QR_CODE = "key_code"
-    val  KEY_IS_CONTINUOUS : String = "key_continuous_scan"
-    val REQUEST_CODE_SCAN = 0X01
-    val REQUEST_CODE_PHOTO = 0X02
+    companion object {
+        var navigationPosition: Int = 0
 
-    val RC_CAMERA = 0X01
+        private val MAINACTIVITY = 0
+        val KEY_IS_QR_CODE = "key_code"
+        val  KEY_IS_CONTINUOUS : String = "key_continuous_scan"
+        val REQUEST_CODE_SCAN = 0X01
+        val REQUEST_CODE_PHOTO = 0X02
 
-    val RC_READ_PHOTO = 0X02
+        const val RC_CAMERA = 0X01
 
+        val RC_READ_PHOTO = 0X02
+    }
     private val cls: Class<*>? = null
     private val title: String? = null
     private val isContinuousScan = false
@@ -61,11 +68,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpDrawerLayout() {
         val toggle = ActionBarDrawerToggle(
-            this,
-            drawer_layout,
-            toolbar_main,
-            R.string.app_name,
-            R.string.app_name
+                this,
+                drawer_layout,
+                toolbar_main,
+                R.string.app_name,
+                R.string.app_name
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
@@ -80,18 +87,18 @@ class MainActivity : AppCompatActivity() {
 
         fluidBottomNavigation.items =
             listOf(
-                FluidBottomNavigationItem(
-                    getString(R.string.home),
-                    ContextCompat.getDrawable(this, R.drawable.ic_round_home_24)
-                ),
-                FluidBottomNavigationItem(
-                    getString(R.string.discover),
-                    ContextCompat.getDrawable(this, R.drawable.ic_round_library_books_24)
-                ),
-                FluidBottomNavigationItem(
-                    getString(R.string.user),
-                    ContextCompat.getDrawable(this, R.drawable.ic_round_person_24)
-                )
+                    FluidBottomNavigationItem(
+                            getString(R.string.home),
+                            ContextCompat.getDrawable(this, R.drawable.ic_round_home_24)
+                    ),
+                    FluidBottomNavigationItem(
+                            getString(R.string.discover),
+                            ContextCompat.getDrawable(this, R.drawable.ic_round_library_books_24)
+                    ),
+                    FluidBottomNavigationItem(
+                            getString(R.string.user),
+                            ContextCompat.getDrawable(this, R.drawable.ic_round_person_24)
+                    )
             )
         fluidBottomNavigation.selectTab(1)
 
@@ -172,60 +179,57 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-//                .addToBackStack(null)
                 .commit()
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-
-    //    override fun onConfigurationChanged(newConfig: Configuration) {
-//        super.onConfigurationChanged(newConfig)
-//        toggle.onConfigurationChanged(newConfig)
-//    }
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//
-//        if (toggle.onOptionsItemSelected(item)) {
-//            return true
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
 private  fun startScan(cls: Class<*>, title: String) {
     val optionsCompat = ActivityOptionsCompat.makeCustomAnimation(this, R.anim.`in`, R.anim.out)
     val intent = Intent(this, cls)
-//    intent.putExtra(MainActivity.KEY_IS_CONTINUOUS, isContinuousScan)
+    intent.putExtra(MainActivity.KEY_IS_CONTINUOUS, isContinuousScan)
     ActivityCompat.startActivityForResult(
-        this,
-        intent,
-        REQUEST_CODE_SCAN,
-        optionsCompat.toBundle()
+            this,
+            intent,
+            REQUEST_CODE_SCAN,
+            optionsCompat.toBundle()
     )
 }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
-
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+
     }
 
-
-private  fun checkCameraPermissions() {
+    @AfterPermissionGranted(RC_CAMERA)
+    private  fun checkCameraPermissions() {
     val perms = arrayOf(Manifest.permission.CAMERA)
     if (EasyPermissions.hasPermissions(this, *perms)) { //有权限
         startScan(QRCodeActivity::class.java, "scan")
     } else {
-        // Do not have permissions, request them now
         EasyPermissions.requestPermissions(
-            this, "afasfasfas",
-            RC_CAMERA, *perms
+                this, "afasfasfas",
+                RC_CAMERA, *perms
         )
     }
 }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && data != null) {
+            when (requestCode) {
+                REQUEST_CODE_SCAN -> {
+                    val result = data.getStringExtra(Intents.Scan.RESULT)
+                    getFragment(QrCodeFragment.newInstance(result.toString()))
+                }
+            }
+        }
+    }
 
 }
