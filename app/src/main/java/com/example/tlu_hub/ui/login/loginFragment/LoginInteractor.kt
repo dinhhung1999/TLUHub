@@ -3,8 +3,10 @@ package com.example.tlu_hub.ui.login.loginFragment
 import android.util.Log
 import com.example.tlu_hub.contraints.Constraint
 import com.example.tlu_hub.contraints.Constraint.API_STATUS.Companion.isLogin
+import com.example.tlu_hub.contraints.Constraint.Companion.codeUser
 import com.example.tlu_hub.data_local.Preferences
 import com.example.tlu_hub.http.API
+import com.example.tlu_hub.model.student.Student
 import com.example.tlu_hub.model.userData.UserData
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,8 +38,7 @@ class LoginInteractor {
             override fun onResponse(call: Call<UserData>, response: Response<UserData>) {
                 if (response.isSuccessful) {
                     Preferences.getInstance().saveToken(response.body()!!.token)
-                    Constraint.username = response.body()?.user!!.username
-                    Constraint.userData = response.body()!!
+                    codeUser = response.body()!!.user.code_user
                     isLogin = true
                     listener.onSuccess()
                 } else {
@@ -59,4 +60,5 @@ class LoginInteractor {
 
 
     }
+
 }

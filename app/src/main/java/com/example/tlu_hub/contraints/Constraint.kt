@@ -1,5 +1,6 @@
 package com.example.tlu_hub.contraints
 
+import com.example.tlu_hub.model.student.Student
 import com.example.tlu_hub.model.userData.UserData
 
 class Constraint {
@@ -12,8 +13,8 @@ class Constraint {
     }
     companion object {
         var account: UserData? = null
-        lateinit var username: String
-        lateinit var userData : UserData
+        var codeUser = String()
+        var userData = ArrayList<Student>()
     }
 
 }

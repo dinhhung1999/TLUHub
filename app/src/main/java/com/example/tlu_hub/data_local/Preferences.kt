@@ -29,9 +29,15 @@ class Preferences private constructor(val context: Context) {
     fun saveToken(token: String) {
         sharedPreferences.edit().putString("token", token).apply()
     }
+    fun saveCodeUser(codeUser: String?) {
+        sharedPreferences.edit().putString("codeUser", codeUser).apply()
+    }
 
     fun getToken(): String? {
         return sharedPreferences.getString("token", null)
+    }
+    fun getCodeUser(): String? {
+        return sharedPreferences.getString("codeUser", null)
     }
 
     fun clearToken() {

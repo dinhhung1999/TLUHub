@@ -16,10 +16,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
+import com.example.tlu_hub.contraints.Constraint.Companion.codeUser
 import com.example.tlu_hub.ui.discover.DiscoverFragment
 import com.example.tlu_hub.ui.home.HomeFragment
 import com.example.tlu_hub.ui.navigationDrawer.qrCode.QRCodeActivity
 import com.example.tlu_hub.ui.navigationDrawer.qrCode.QrCodeFragment
+import com.example.tlu_hub.ui.navigationDrawer.qrCode.QrCodePresenter
 import com.example.tlu_hub.ui.user.UserFragment
 import com.king.zxing.Intents
 import com.tenclouds.fluidbottomnavigation.FluidBottomNavigationItem
@@ -33,8 +35,9 @@ import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
 
-class MainActivity : AppCompatActivity() {
-
+class MainActivity: AppCompatActivity(),MainView {
+    private val presenter = MainPresenter(this )
+//    private val codeUser = Intent.get
     companion object {
         var navigationPosition: Int = 0
 
@@ -58,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_main)
+        presenter.getUserData(codeUser)
         initView()
         getFragment(DiscoverFragment.newInstance())
 

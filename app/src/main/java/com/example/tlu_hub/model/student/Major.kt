@@ -11,7 +11,7 @@ data class Major(
         @SerializedName("published_at")
         val published_at : String,
 
-        @SerializedName("published_at")
+        @SerializedName("created_at")
         val created_at : String,
 
         @SerializedName("updated_at")

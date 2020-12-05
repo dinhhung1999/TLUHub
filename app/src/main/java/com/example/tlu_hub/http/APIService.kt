@@ -16,4 +16,7 @@ interface APIService {
     @GET(GETSTUDENT)
     fun getStudent(@Query("code_student") code_student: String): Call<List<Student>>
 
+//    @GET(GETSTUDENT)
+//    fun getUserData(@Query("id") id: Int): Call<List<Student>>
+
 }

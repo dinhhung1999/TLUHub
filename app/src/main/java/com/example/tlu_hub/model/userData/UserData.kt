@@ -8,4 +8,5 @@ data class UserData(
 
         @SerializedName("user")
         val user: user,
-)
+
+        )

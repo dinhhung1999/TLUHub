@@ -33,4 +33,6 @@ class user(
         @SerializedName("code_user")
         val code_user: String,
 
+        @SerializedName("student")
+        val student: Int,
 )

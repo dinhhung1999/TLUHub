@@ -1,8 +1,6 @@
 package com.example.tlu_hub.ui.login.loginFragment
 
-import android.Manifest
 import android.os.Bundle
-import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +8,6 @@ import android.view.ViewGroup
 import com.example.tlu_hub.navigation.MyNavigation
 import com.example.tlu_hub.R
 import kotlinx.android.synthetic.main.fragment_login.*
-import pub.devrel.easypermissions.EasyPermissions
 
 /**
  * //                       _ooOoo_
