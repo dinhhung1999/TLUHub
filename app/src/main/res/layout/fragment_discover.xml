@@ -19,13 +19,11 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_140sdp">
-                <com.denzcoskun.imageslider.ImageSlider
-                    android:id="@+id/image_slider"
+                <com.smarteist.autoimageslider.SliderView
+                    android:id="@+id/imageSilde"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:iss_auto_cycle="true"
-                    app:iss_period="1000"
-                    app:iss_delay="0"/>
+                    app:iss_auto_cycle="true"/>
             </androidx.cardview.widget.CardView>
             <EditText
                 android:id="@+id/etSearch"

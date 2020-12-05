@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TLU_HUB</string>
+    <string name="app_name">TLUHUB</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     ///login//
@@ -10,6 +10,8 @@
     <string name="password">Mật Khẩu</string>
     <string name="msv">Mã Sinh Viên</string>
     <string name="forgotPassword">Quên Mật Khẩu ?</string>
+    <string name="message_request_permission_read_phone_state">Chúng tôi cần được cấp quyền để tiếp tục</string>
+
 
 
     /// main ///

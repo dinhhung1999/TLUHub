@@ -1,23 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_header"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_160sdp"
+    android:layout_height="wrap_content"
     android:background="@color/brown"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackgroundBorderless"
-    android:gravity="bottom"
-    android:orientation="vertical"
     android:padding="@dimen/_16sdp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:id="@+id/nav_header_imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/tlu" />
-
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvHeader"
+        app:cardCornerRadius="@dimen/_45sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="@dimen/_90sdp">
+        <ImageView
+            android:id="@+id/nav_header_imageView"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp" />
+    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/tvNameUserInHeader"
+        app:layout_constraintTop_toBottomOf="@+id/cvHeader"
+        app:layout_constraintStart_toStartOf="@id/cvHeader"
+        app:layout_constraintEnd_toEndOf="@id/cvHeader"
+        android:padding="@dimen/_15sdp"
+        style="@style/textSyleWhiteH2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 <!--    <TextView-->
 <!--        android:id="@+id/nav_header_textView"-->
 <!--        android:layout_width="match_parent"-->
@@ -25,4 +40,4 @@
 <!--        android:paddingTop="16dp"-->
 <!--        android:text="Chike Mgbemena"-->
 <!--        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />-->
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

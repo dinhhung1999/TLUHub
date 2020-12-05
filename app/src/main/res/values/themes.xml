@@ -17,8 +17,12 @@
         <item name="android:textColorSecondary">@color/white</item>
     </style>
     <style name="textSyleWhiteH2">
-        <item name="android:textSize">@dimen/_16sdp</item>
-        <item name="textColor">@color/white</item>
+        <item name="android:textSize">@dimen/_14sdp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="textSyleWhiteH1">
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="textSyleH3">

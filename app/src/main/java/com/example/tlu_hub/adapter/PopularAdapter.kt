@@ -22,17 +22,14 @@ class PopularAdapter : RecyclerView.Adapter<PopularHolder> {
     }
 
     override fun onBindViewHolder(holder: PopularHolder, position: Int) {
-        if (holder != null) {
-            holder.tvPopular.text = populars[position].Title
-            Glide
-                    .with(holder.itemView)
-                    .load(populars[position].UrlImage)
-                    .centerCrop()
-                    .placeholder(R.drawable.loading)
-                    .error(R.drawable.ic_round_error_outline_24)
-                    .into(holder.imPopular)
-
-        }
+        holder.tvPopular.text = populars[position].Title
+        Glide
+                .with(holder.itemView)
+                .load(populars[position].UrlImage)
+                .centerCrop()
+                .placeholder(R.drawable.loading)
+                .error(R.drawable.ic_round_error_outline_24)
+                .into(holder.imPopular)
     }
 
     override fun getItemCount(): Int {

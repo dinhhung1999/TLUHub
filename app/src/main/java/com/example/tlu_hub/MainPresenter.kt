@@ -11,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainPresenter(mainView: MainView?) {
+class MainPresenter(val mainView: MainView?) {
     fun getUserData(codeUser : String){
         val call: Call<List<Student>> = API.apiService.getStudent(codeUser)
         call.enqueue(object : Callback<List<Student>> {
@@ -19,6 +19,7 @@ class MainPresenter(mainView: MainView?) {
                 if (response.isSuccessful) {
                     userData.clear()
                     userData.addAll(response.body()!!)
+                    mainView?.onSetProfile()
                 } else {
                     when (response.code()) {
                         400 -> Log.e("Error 400", "Bad Request")

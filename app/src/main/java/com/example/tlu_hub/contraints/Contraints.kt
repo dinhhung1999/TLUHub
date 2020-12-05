@@ -5,5 +5,7 @@ class Contraints {
         const val BASE_URL = "http://35.240.216.132:5555"
         const val LOGIN = "auth/local"
         const val GETSTUDENT = "students"
+        const val GETPOSTS = "posts"
+        const val GETCATEGORY = "categories"
     }
 }

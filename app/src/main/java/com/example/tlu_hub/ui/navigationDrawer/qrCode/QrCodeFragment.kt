@@ -54,8 +54,9 @@ class QrCodeFragment(var codeStudent: String) : Fragment() , QrCodeView{
         tvHometown?.text = presenter.students[0].hometown_student
         tvGender?.text = presenter.students[0].gender_student
         tvCourse?.text = presenter.students[0].course.code_course
+        tvClass?.text = presenter.students[0].Class.code_class
         tvFaculty?.text = presenter.students[0].faculty.name_faculty
-        tvMajor?.text = presenter.students[0].Major.name_majors
+        tvMajor?.text = presenter.students[0].major.name_majors
     }
 
     override fun onError() {

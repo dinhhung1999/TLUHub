@@ -37,15 +37,16 @@ class UserFragment : Fragment(),UserView {
     }
 
     override fun onSuccess() {
-                Glide
+        Glide
                 .with(this)
                 .load(BASE_URL+userData[0].avatar_student.formats.medium.url)
                 .centerCrop()
                 .placeholder(R.drawable.loading)
                 .error(R.drawable.ic_round_error_outline_24)
                 .into(imAvatar)
-        tvUserName.text = getString(R.string.useName) + " " + userData[0].name_student
-//        tvEmail.text = getString(R.string.email) + " " + userData.user.email
-//        tvCode_user.text =  getString(R.string.code_user) + " " + userData.user.code_user
+        tvUserName.text =userData[0].name_student
+        tvFacultyUser.text = userData[0].faculty.name_faculty
+        tvMajorUser.text =userData[0].major.name_majors
+
     }
 }

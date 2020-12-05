@@ -16,7 +16,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
+import com.example.tlu_hub.contraints.Constraint
 import com.example.tlu_hub.contraints.Constraint.Companion.codeUser
+import com.example.tlu_hub.contraints.Constraint.Companion.userData
+import com.example.tlu_hub.contraints.Contraints
 import com.example.tlu_hub.ui.discover.DiscoverFragment
 import com.example.tlu_hub.ui.home.HomeFragment
 import com.example.tlu_hub.ui.navigationDrawer.qrCode.QRCodeActivity
@@ -28,6 +31,8 @@ import com.tenclouds.fluidbottomnavigation.FluidBottomNavigationItem
 import com.tenclouds.fluidbottomnavigation.listener.OnTabSelectedListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.fragment_user.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -234,6 +239,18 @@ private  fun startScan(cls: Class<*>, title: String) {
                 }
             }
         }
+    }
+
+    override fun onSetProfile() {
+        Glide
+                .with(this)
+                .load(Contraints.BASE_URL + Constraint.userData[0].avatar_student.formats.medium.url)
+                .centerCrop()
+                .placeholder(R.drawable.loading)
+                .error(R.drawable.ic_round_error_outline_24)
+                .into(nav_header_imageView)
+        tvNameUserInHeader.text = userData[0].name_student
+
     }
 
 }

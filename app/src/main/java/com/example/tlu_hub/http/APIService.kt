@@ -1,7 +1,9 @@
 package com.example.tlu_hub.http
 
+import com.example.tlu_hub.contraints.Contraints.Companion.GETCATEGORY
 import com.example.tlu_hub.contraints.Contraints.Companion.GETSTUDENT
 import com.example.tlu_hub.contraints.Contraints.Companion.LOGIN
+import com.example.tlu_hub.model.category.Category
 import com.example.tlu_hub.model.student.Student
 import com.example.tlu_hub.model.userData.UserData
 import io.reactivex.Observable
@@ -16,7 +18,7 @@ interface APIService {
     @GET(GETSTUDENT)
     fun getStudent(@Query("code_student") code_student: String): Call<List<Student>>
 
-//    @GET(GETSTUDENT)
-//    fun getUserData(@Query("id") id: Int): Call<List<Student>>
+    @GET(GETCATEGORY)
+    fun getCategory(@Query("name_category") name_category : String) : Call<List<Category>>
 
 }

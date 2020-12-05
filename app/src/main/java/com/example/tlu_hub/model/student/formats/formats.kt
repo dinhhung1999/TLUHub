@@ -12,5 +12,8 @@ data class formats(
         @SerializedName("small")
         val small : type,
 
+        @SerializedName("large")
+        val large : type,
+
 
 )

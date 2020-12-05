@@ -7,7 +7,7 @@ data class Student(
    val id: Int,
 
    @SerializedName("major")
-   val Major: Major,
+   val major: Major,
 
    @SerializedName("code_student")
    val code_student: String,
