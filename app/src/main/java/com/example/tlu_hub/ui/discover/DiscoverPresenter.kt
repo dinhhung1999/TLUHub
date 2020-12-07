@@ -2,6 +2,7 @@ package com.example.tlu_hub.ui.discover
 
 import android.util.Log
 import com.example.tlu_hub.contraints.Constraint
+import com.example.tlu_hub.contraints.Constraint.Companion.new
 import com.example.tlu_hub.data_local.Preferences
 import com.example.tlu_hub.http.API
 import com.example.tlu_hub.model.category.Category
@@ -40,6 +41,7 @@ class DiscoverPresenter(var view: DiscoverView?) {
                 if (response.isSuccessful) {
                     news.clear()
                     news.addAll(response.body()!!)
+                    new.addAll(response.body()!!)
                     view?.onSetUpNews()
                 } else {
                     when (response.code()) {

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_160sdp"
+    android:layout_height="wrap_content"
     android:padding="@dimen/_16sdp"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <androidx.cardview.widget.CardView
     app:cardCornerRadius="@dimen/_10sdp"
     android:elevation="@dimen/_1sdp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="@dimen/_160sdp">
     <ImageView
         android:scaleType="center"
         android:id="@+id/imNews"
@@ -18,10 +19,11 @@
 </androidx.cardview.widget.CardView>
     <TextView
         android:id="@+id/tvNews"
-        android:translationZ="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_gravity="center"
         android:textColor="@color/white"
-        android:padding="@dimen/_16sdp"
-        android:layout_alignParentBottom="true"
+        android:paddingLeft="@dimen/_16sdp"
+        android:paddingRight="@dimen/_16sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-</RelativeLayout>
+</LinearLayout>

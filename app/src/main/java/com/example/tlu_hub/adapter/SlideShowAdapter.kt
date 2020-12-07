@@ -10,6 +10,7 @@ import com.example.tlu_hub.R
 import com.example.tlu_hub.contraints.Contraints
 import com.example.tlu_hub.contraints.Contraints.Companion.BASE_URL
 import com.example.tlu_hub.model.category.Category
+import com.example.tlu_hub.model.category.posts
 import com.smarteist.autoimageslider.SliderViewAdapter
 import java.util.*
 
@@ -17,6 +18,10 @@ class SlideShowAdapter : SliderViewAdapter<SlideShowAdapter.SliderAdapterHolder>
     private var SliderItems = ArrayList<Category>()
     constructor(SliderItems: ArrayList<Category>) : super() {
         this.SliderItems = SliderItems
+    }
+    private lateinit var itemClickListener: (posts) -> Unit
+    fun setItemClickListener(itemClickListener: ((posts) -> Unit)) {
+        this.itemClickListener = itemClickListener
     }
 
     override fun getCount(): Int {
@@ -38,6 +43,7 @@ class SlideShowAdapter : SliderViewAdapter<SlideShowAdapter.SliderAdapterHolder>
                     .placeholder(R.drawable.loading)
                     .error(R.drawable.ic_round_error_outline_24)
                     .into(viewHolder.iv_image_slider)
+            viewHolder.itemView.setOnClickListener {itemClickListener?.invoke( SliderItems[0].posts[position])  }
         }
 
     }

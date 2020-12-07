@@ -46,7 +46,6 @@
     </style>
 
 
-
     <style name="Theme.TLU_HUB.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

@@ -25,6 +25,8 @@ import com.example.tlu_hub.ui.home.HomeFragment
 import com.example.tlu_hub.ui.navigationDrawer.qrCode.QRCodeActivity
 import com.example.tlu_hub.ui.navigationDrawer.qrCode.QrCodeFragment
 import com.example.tlu_hub.ui.navigationDrawer.qrCode.QrCodePresenter
+import com.example.tlu_hub.ui.post.IOnBackPressed
+import com.example.tlu_hub.ui.post.PostFragment
 import com.example.tlu_hub.ui.user.UserFragment
 import com.king.zxing.Intents
 import com.tenclouds.fluidbottomnavigation.FluidBottomNavigationItem
@@ -45,7 +47,6 @@ class MainActivity: AppCompatActivity(),MainView {
 //    private val codeUser = Intent.get
     companion object {
         var navigationPosition: Int = 0
-
         private val MAINACTIVITY = 0
         val KEY_IS_QR_CODE = "key_code"
         val  KEY_IS_CONTINUOUS : String = "key_continuous_scan"
@@ -55,6 +56,7 @@ class MainActivity: AppCompatActivity(),MainView {
         const val RC_CAMERA = 0X01
 
         val RC_READ_PHOTO = 0X02
+
     }
     private val cls: Class<*>? = null
     private val title: String? = null
@@ -64,7 +66,6 @@ class MainActivity: AppCompatActivity(),MainView {
     private lateinit var toggle: ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_main)
         presenter.getUserData(codeUser)
         initView()
@@ -130,27 +131,37 @@ class MainActivity: AppCompatActivity(),MainView {
                 }
             }
         }
-
     }
-
+    fun getFragment(fragment: Fragment) {
+        try {
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, fragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .commit()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
-        } else{
+        }
+        if (navigationPosition == R.layout.fragment_post) {
+            navigationPosition = R.layout.fragment_discover
+            getFragment(DiscoverFragment.newInstance())
+        } else {
             super.onBackPressed()
         }
-
     }
 
     private fun initView(){
         setSupportActionBar(toolbar_main)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayShowTitleEnabled(true)
         setUpDrawerLayout()
         setUpBottomNavigation()
-
 
         nav_view.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -183,16 +194,8 @@ class MainActivity: AppCompatActivity(),MainView {
     //        getMenuInflater().inflate(R.menu.toobar_layout,menu);
     //        return true;
     //    }
-    private fun getFragment(fragment: Fragment) {
-        try {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, fragment)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .commit()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
+
+
 
 private  fun startScan(cls: Class<*>, title: String) {
     val optionsCompat = ActivityOptionsCompat.makeCustomAnimation(this, R.anim.`in`, R.anim.out)
@@ -223,7 +226,7 @@ private  fun startScan(cls: Class<*>, title: String) {
         startScan(QRCodeActivity::class.java, "scan")
     } else {
         EasyPermissions.requestPermissions(
-                this, "afasfasfas",
+                this, "Ứng dụng cần được cấp quyền Camera để tiếp tục sử dụng tính năng này",
                 RC_CAMERA, *perms
         )
     }
@@ -248,7 +251,7 @@ private  fun startScan(cls: Class<*>, title: String) {
                 .centerCrop()
                 .placeholder(R.drawable.loading)
                 .error(R.drawable.ic_round_error_outline_24)
-                .into(nav_header_imageView)
+                ?.into(nav_header_imageView)
         tvNameUserInHeader.text = userData[0].name_student
 
     }

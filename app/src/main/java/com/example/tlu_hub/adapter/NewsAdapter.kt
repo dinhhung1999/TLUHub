@@ -10,12 +10,17 @@ import com.bumptech.glide.Glide
 import com.example.tlu_hub.R
 import com.example.tlu_hub.contraints.Contraints.Companion.BASE_URL
 import com.example.tlu_hub.model.category.Category
+import com.example.tlu_hub.model.category.posts
 
 class NewsAdapter : RecyclerView.Adapter<NewsHolder> {
     private  var news = ArrayList<Category>()
 
     constructor(news: ArrayList<Category>) : super() {
         this.news = news
+    }
+    private lateinit var itemClickListener: (posts) -> Unit
+    fun setItemClickListener(itemClickListener: ((posts) -> Unit)) {
+        this.itemClickListener = itemClickListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {
@@ -31,6 +36,8 @@ class NewsAdapter : RecyclerView.Adapter<NewsHolder> {
                 .placeholder(R.drawable.loading)
                 .error(R.drawable.ic_round_error_outline_24)
                 .into(holder.imNews)
+
+        holder.itemView.setOnClickListener {itemClickListener?.invoke( news[0].posts[position])  }
     }
 
     override fun getItemCount(): Int {

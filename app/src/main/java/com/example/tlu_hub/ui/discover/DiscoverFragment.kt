@@ -10,11 +10,15 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tlu_hub.MainActivity
 import com.example.tlu_hub.R
 import com.example.tlu_hub.adapter.NewsAdapter
 import com.example.tlu_hub.adapter.PopularAdapter
 import com.example.tlu_hub.adapter.SlideShowAdapter
 import com.example.tlu_hub.model.PopularModel
+import com.example.tlu_hub.model.category.posts
+import com.example.tlu_hub.ui.login.loginFragment.LoginFragment
+import com.example.tlu_hub.ui.post.PostFragment
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
@@ -25,6 +29,7 @@ class DiscoverFragment : Fragment(),DiscoverView {
 
     var populars : ArrayList<PopularModel> =  ArrayList<PopularModel>()
     private var presenter = DiscoverPresenter(this)
+    private lateinit var newsAdapter: NewsAdapter
 
     companion object {
         fun newInstance() =
@@ -107,6 +112,11 @@ class DiscoverFragment : Fragment(),DiscoverView {
 
     override fun onSetUpSlide() {
         var sliderImageAdapter = SlideShowAdapter(presenter.slideShows)
+        sliderImageAdapter.setItemClickListener { posts: posts ->
+            svDiscover.visibility = View.GONE
+            val child: Fragment = PostFragment(posts)
+            val transaction = childFragmentManager.beginTransaction()
+            transaction.replace(R.id.post_Fragment, child).commit() }
         imageSilde.setSliderAdapter(sliderImageAdapter)
         imageSilde.setIndicatorAnimation(IndicatorAnimationType.THIN_WORM) //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         imageSilde.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
@@ -124,6 +134,12 @@ class DiscoverFragment : Fragment(),DiscoverView {
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(
                 context, RecyclerView.VERTICAL, false
         )
+        newsAdapter = NewsAdapter(presenter.news)
+        newsAdapter.setItemClickListener { posts: posts ->
+            svDiscover.visibility = View.GONE
+            val child: Fragment = PostFragment(posts)
+            val transaction = childFragmentManager.beginTransaction()
+            transaction.replace(R.id.post_Fragment, child).commit() }
         rvActivity.layoutManager = layoutManager
         rvActivity.setHasFixedSize(true)
         rvActivity.itemAnimator = DefaultItemAnimator()
@@ -134,6 +150,6 @@ class DiscoverFragment : Fragment(),DiscoverView {
                 )
         )
 //        rvPopular.adapter = populars?.let { PopularAdapter(it) }
-        rvActivity.adapter = NewsAdapter(presenter.news)
+        rvActivity.adapter = newsAdapter
     }
 }
