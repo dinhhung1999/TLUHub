@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.tlu_hub.R
-import com.example.tlu_hub.contraints.Constraint
 import com.example.tlu_hub.contraints.Constraint.Companion.userData
 import com.example.tlu_hub.contraints.Contraints.Companion.BASE_URL
 import kotlinx.android.synthetic.main.fragment_user.*

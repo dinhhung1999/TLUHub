@@ -13,7 +13,6 @@
             android:id="@+id/toolbar_main"
             app:title="@string/home"
             app:titleTextColor="@color/white"
-            app:titleMarginStart="@dimen/_80sdp"
             android:layout_width="match_parent"
             android:theme="@style/ToolbarColoredBackArrow"
             android:layout_height="?attr/actionBarSize"

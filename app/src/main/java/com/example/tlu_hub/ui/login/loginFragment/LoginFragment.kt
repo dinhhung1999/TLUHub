@@ -52,8 +52,8 @@ class LoginFragment : Fragment(),LoginView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        etUser.setText("hungdv@wru.vn")
-        etPassword.setText("123456")
+//        etUser.setText("hungdv@wru.vn")
+//        etPassword.setText("123456")
         btnLogin.setOnClickListener {
             validateCredentials()
         }

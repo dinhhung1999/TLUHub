@@ -118,13 +118,16 @@ class MainActivity: AppCompatActivity(),MainView {
                 when (fluidBottomNavigation.items[position]) {
                     fluidBottomNavigation.items[0] -> {
                         nav_view.setCheckedItem(R.id.nav_item_home)
+                        toolbar_main.title = getString(R.string.home)
                         getFragment(HomeFragment.newInstance())
 
                     }
                     fluidBottomNavigation.items[1] -> {
+                        toolbar_main.title = getString(R.string.discover)
                         getFragment(DiscoverFragment.newInstance())
                     }
                     fluidBottomNavigation.items[2] -> {
+                        toolbar_main.title = getString(R.string.user)
                         nav_view.setCheckedItem(R.id.nav_item_info)
                         getFragment(UserFragment.newInstance())
                     }
@@ -150,6 +153,9 @@ class MainActivity: AppCompatActivity(),MainView {
         if (navigationPosition == R.layout.fragment_post) {
             navigationPosition = R.layout.fragment_discover
             getFragment(DiscoverFragment.newInstance())
+        } else if (navigationPosition == R.layout.fragment_qr_code) {
+            navigationPosition = R.layout.fragment_discover
+            getFragment(DiscoverFragment.newInstance())
         } else {
             super.onBackPressed()
         }
@@ -167,13 +173,16 @@ class MainActivity: AppCompatActivity(),MainView {
             when (menuItem.itemId) {
                 R.id.nav_item_home -> {
                     fluidBottomNavigation.selectTab(0)
+                    toolbar_main.title = getString(R.string.home)
                     getFragment(HomeFragment.newInstance())
                 }
                 R.id.nav_item_info -> {
+                    toolbar_main.title = getString(R.string.user)
                     fluidBottomNavigation.selectTab(2)
                     getFragment(UserFragment.newInstance())
                 }
                 R.id.nav_item_qrCode -> {
+                    toolbar_main.title = getString(R.string.infor)
                     GlobalScope.launch { // launch a new coroutine in background and continue
                         delay(210L) //
                         checkCameraPermissions()
@@ -187,14 +196,6 @@ class MainActivity: AppCompatActivity(),MainView {
             true
         }
     }
-
-
-    //    @Override
-    //    public boolean onCreateOptionsMenu(Menu menu) {
-    //        getMenuInflater().inflate(R.menu.toobar_layout,menu);
-    //        return true;
-    //    }
-
 
 
 private  fun startScan(cls: Class<*>, title: String) {
@@ -222,7 +223,8 @@ private  fun startScan(cls: Class<*>, title: String) {
     @AfterPermissionGranted(RC_CAMERA)
     private  fun checkCameraPermissions() {
     val perms = arrayOf(Manifest.permission.CAMERA)
-    if (EasyPermissions.hasPermissions(this, *perms)) { //有权限
+    if (EasyPermissions.hasPermissions(this, *perms)) {
+        navigationPosition = R.layout.fragment_qr_code
         startScan(QRCodeActivity::class.java, "scan")
     } else {
         EasyPermissions.requestPermissions(

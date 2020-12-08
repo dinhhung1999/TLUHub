@@ -53,7 +53,6 @@ class QrCodeFragment(var codeStudent: String) : Fragment() , QrCodeView{
         tvBirthDay?.text = presenter.students[0].birthday_student
         tvHometown?.text = presenter.students[0].hometown_student
         tvGender?.text = presenter.students[0].gender_student
-        tvCourse?.text = presenter.students[0].course.code_course
         tvClass?.text = presenter.students[0].Class.code_class
         tvFaculty?.text = presenter.students[0].faculty.name_faculty
         tvMajor?.text = presenter.students[0].major.name_majors

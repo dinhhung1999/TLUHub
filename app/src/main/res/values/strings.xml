@@ -17,6 +17,7 @@
     <string name="home">Trang Chủ</string>
     <string name="discover">Khám Phá</string>
     <string name="user">Tài Khoản</string>
+    <string name="infor">Thông tin sinh viên</string>
 
     /// drawer menu
     <string name="personalInformation">Thông tin cá nhân</string>
